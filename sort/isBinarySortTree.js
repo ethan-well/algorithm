@@ -1,5 +1,5 @@
 function isBinarySortTree(node) {
-  result = true;
+  var result = true;
   if(node.left !== null) {
     if(node.left.value > node.value) {
       return false;
