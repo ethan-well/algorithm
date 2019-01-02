@@ -4,7 +4,7 @@ var multiply = function(num1, num2) {
   var sum_arr = [];
   var products_arr = [];
   for (var i = 0; i < num1_arr.length; i++) {
-    products_arr.push( get_products_arr( Math.pow( 10, (num1_arr.length - 1 - i) ) * Number(num1_arr[i]),  num2_arr ) );
+    products_arr.push( get_products_arr( Number(num1_arr[i]), num1_arr.length - 1 - i,  num2 ) );
   }
 
   for (i = 0; i < products_arr.length; i++) {
@@ -14,12 +14,21 @@ var multiply = function(num1, num2) {
   return sum_arr.join('');
 };
 
-var get_products_arr = function(num1, num2_arr) {
-  var sum_arr = [0];
-  for (i = 1; i <= num1; i++) {
-    sum_arr = get_sum_arr(sum_arr, num2_arr);
+var get_products_arr = function(num1, exponent, num2) {
+  var num2_arr = num2.split('');
+  var num2_arr_len = num2_arr.length;
+  var to_next = 0;
+  for (var i = num2_arr_len - 1; i >= 0; i--) {
+    var product = num1 * num2_arr[i];
+    var tmp = product % 10 + to_next;
+    var to_next = Math.floor( product / 10 );
+    num2_arr[i] = tmp;
   }
-  return sum_arr;
+  if (to_next > 0) num2_arr.unshift(to_next);
+  for (var j = 0; j < exponent; j ++) {
+    num2_arr.push(0);
+  }
+  return num2_arr;
 }
 
 var get_sum_arr = function(sum_arr, num2_arr) {
@@ -47,4 +56,4 @@ var get_sum_arr = function(sum_arr, num2_arr) {
   return sum_arr;
 }
 
-// console.log(multiply('123456789', '98765432'));
+// console.log(multiply('123456789', '987654321'));
