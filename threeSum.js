@@ -5,9 +5,12 @@
 var threeSum = function(nums) {
   var arrs = [];
   for ( var i = 0; i < nums.length; i++) {
+    if ( arrs[i] > 0) break;
     for (var j = i + 1; j < nums.length; j++) {
+      if (arrs[i] + arrs[j] > 0) break;
       for (var k = j + 1; k < nums.length; k++) {
         var sum  = nums[i] + nums[j] + nums[k];
+        if ( sum > 0) break;
         if ( sum === 0 ) {
           var arr = [nums[i], nums[j], nums[k]].sort();
           if (alreadyHas(arr, arrs)) continue;
