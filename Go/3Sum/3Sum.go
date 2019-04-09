@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sort"
-	"strings"
 )
 
 // func intSlice(arr []int) {
@@ -15,6 +14,9 @@ func threeSum(arr []int) [][]int {
 	var left, right int
 	var result [][]int
 	for i := 0; i < len(arr)-2 && arr[i] <= 0; i++ {
+		if i > 0 && arr[i] == arr[i-1] {
+			continue
+		}
 		left = i + 1
 		right = len(arr) - 1
 		for left < right {
@@ -23,12 +25,16 @@ func threeSum(arr []int) [][]int {
 			switch {
 			case sum == 0:
 				tem := []int{arr[i], arr[left], arr[right]}
-				temToStr := strings.Trim(strings.Join(strings.Split(fmt.Sprint(tem), " "), ","), "[]")
-				resultToStr := strings.Trim(strings.Join(strings.Split(fmt.Sprint(result), " "), ","), "[]")
-				if !strings.Contains(resultToStr, temToStr) {
-					result = append(result, tem)
+				result = append(result, tem)
+
+				left++
+				right--
+				for left < right && arr[left] == arr[left-1] {
+					left++
 				}
-				left, right = left+1, right-1
+				for left < right && arr[right] == arr[right+1] {
+					right--
+				}
 			case sum < 0:
 				left = left + 1
 			default:
