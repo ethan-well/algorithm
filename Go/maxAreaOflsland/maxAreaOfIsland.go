@@ -5,7 +5,7 @@ import "fmt"
 func areaArountCurentPoint(y, x int, grid [][]int) int {
 	area := 0
 	maxY := len(grid)
-	maxX := len(grid[1])
+	maxX := len(grid[0])
 
 	if v := grid[y][x]; v == 0 {
 		return area
