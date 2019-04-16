@@ -2,11 +2,12 @@ package main
 
 import "fmt"
 
-func findKthLargest(arr []int, k int) int {
-	arrUniqed := arrayUniqByMap(arr[:])
+func findKthLargest(nums []int, k int) int {
+	arrUniqed := arrayUniqByMap(nums[:])
 
 	left, right := 0, len(arrUniqed)-1
 	quicksort(left, right, arrUniqed[:])
+
 	return arrUniqed[k-1]
 }
 
