@@ -4,29 +4,23 @@ func longestConsecutive(nums []int) int {
 	numMap := make(map[int]int)
 	maxLen := 0
 	for _, num := range nums {
-		tmp := numMap[num]
-
-		rightOpt := num + 1
-		for ; numMap[rightOpt] > 0; rightOpt++ {
-			numMap[rightOpt]++
-		}
-
-		if rightCount := numMap[rightOpt-1]; rightCount > 0 {
-			numMap[num] = rightCount
+		if numMap[num] != 0 {
+			continue
 		} else {
 			numMap[num] = 1
 		}
 
-		step := 0
-		if tmp == 0 {
-			step = numMap[num]
-		} else {
-			step = 1
+		for rightOpt := num + 1; numMap[rightOpt] > 0; rightOpt++ {
+			numMap[rightOpt]++
 		}
 
-		var maxLen int
-		leftOpt := num - 1
-		for ; numMap[leftOpt] > 0; leftOpt-- {
+		if rightCount := numMap[num+1]; rightCount > numMap[num] {
+			numMap[num] = rightCount
+		}
+
+		step := numMap[num]
+
+		for leftOpt := num - 1; numMap[leftOpt] > 0; leftOpt-- {
 			numMap[leftOpt] += step
 		}
 
@@ -34,16 +28,8 @@ func longestConsecutive(nums []int) int {
 			numMap[num] = numMap[num-1]
 		}
 
-		if step == 0 {
-			for rightOpt--; rightOpt >= num; rightOpt-- {
-				numMap[rightOpt] = numMap[num]
-			}
-		}
-
-		for _, val := range nums {
-			if numMap[val] > maxLen {
-				maxLen = numMap[val]
-			}
+		for rightOpt := num + 1; numMap[rightOpt] > 0; rightOpt++ {
+			numMap[rightOpt] = numMap[num]
 		}
 	}
 
