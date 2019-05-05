@@ -10,26 +10,18 @@ func longestConsecutive(nums []int) int {
 			numMap[num] = 1
 		}
 
+		rightCount := 0
 		for rightOpt := num + 1; numMap[rightOpt] > 0; rightOpt++ {
-			numMap[rightOpt]++
+			rightCount++
 		}
 
-		if rightCount := numMap[num+1]; rightCount > numMap[num] {
-			numMap[num] = rightCount
-		}
-
-		step := numMap[num]
-
+		leftCount := 0
 		for leftOpt := num - 1; numMap[leftOpt] > 0; leftOpt-- {
-			numMap[leftOpt] += step
+			leftCount++
 		}
 
-		if numMap[num-1] > numMap[num] {
-			numMap[num] = numMap[num-1]
-		}
-
-		for rightOpt := num + 1; numMap[rightOpt] > 0; rightOpt++ {
-			numMap[rightOpt] = numMap[num]
+		for rightOpt := num + rightCount; numMap[rightOpt] > 0; rightOpt-- {
+			numMap[rightOpt] = rightCount + leftCount + 1
 		}
 	}
 
