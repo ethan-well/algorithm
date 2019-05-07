@@ -1,11 +1,8 @@
 package reverseList
 
-import "testing"
-
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import (
+	"testing"
+)
 
 func TestReverseList(t *testing.T) {
 	var listNode1 ListNode
@@ -23,11 +20,12 @@ func TestReverseList(t *testing.T) {
 	listNode4.Next = &listNode3
 
 	result := reverseList(&listNode4)
+
 	for result.Next != nil {
 		result = result.Next
 	}
 
-	if result.Val != 1 {
-		t.Errorf("everseList(&listNode4) get %d, expected 1", result.Next)
+	if result.Val != 4 {
+		t.Errorf("everseList(&listNode4) get %d, expected 4", result.Val)
 	}
 }
