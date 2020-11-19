@@ -1,7 +1,5 @@
 package main
 
-import "log"
-
 func main() {
 	people := [][]int{ {7,0},{4,4},{7,1},{5,0},{6,1},{5,2}}
 
@@ -17,18 +15,6 @@ func reconstructQueue(people [][]int) [][]int {
 	for _, p := range people {
 		heightIMap[p[0]] = append(heightIMap[p[0]], p[1])
 		insertToQueue(&heightQueue, 0, len(heightQueue)-1, p[0])
-	}
-
-	for _, h := range heightQueue {
-		nums := heightIMap[h]
-		var numsSorted []int
-		for _, n := range nums {
-			insertToQueue(&numsSorted, 0, len(numsSorted) -1, n)
-		}
-
-		heightIMap[h] = numsSorted
-
-		log.Printf("h: %d, numsSorted: %v", h, numsSorted)
 	}
 
 	var sortedQueue = make([][]int, len(people))
