@@ -3,10 +3,15 @@ package main
 import "testing"
 
 func TestInsertToQueue(t *testing.T) {
-	arr := []int{1, 2, 4, 5, 8, 10}
-	arr2 := insertToQueue(arr, 0)
+	// var arr []int
 
-	t.Logf("arr: %v", arr2)
+	arr := []int{4, 5, 7, 7}
+
+	t.Logf("arr length: %d", len(arr))
+
+	insertToQueue(&arr, 0, len(arr) - 1, 6)
+
+	t.Logf("arr: %v", arr)
 }
 
 func TestReconstructQueue(t *testing.T) {
