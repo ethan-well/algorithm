@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestInsertToQueue(t *testing.T) {
 	// var arr []int
