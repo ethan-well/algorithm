@@ -8,69 +8,60 @@ func main() {
 
 func reconstructQueue(people [][]int) [][]int {
 
-	heightIMap := make(map[int][]int)
-
-	var heightQueue []int
+	var heightQueue [][]int
 
 	for _, p := range people {
-		heightIMap[p[0]] = append(heightIMap[p[0]], p[1])
-		insertToQueue(&heightQueue, 0, len(heightQueue)-1, p[0])
+		insertToQueue(&heightQueue, 0, len(heightQueue)-1, p)
 	}
 
 	var sortedQueue = make([][]int, len(people))
-	for _, h := range heightQueue {
-		for _, n := range heightIMap[h] {
+	for _, p := range heightQueue {
 
 			var j = -1
 			var i = 0
-			for ; j < n; i ++ {
+			for ; j < p[1]; i ++ {
 				if sortedQueue[i] == nil ||
-					sortedQueue[i][0] == h {
+					sortedQueue[i][0] == p[0] {
 
 					j ++
 				}
 			}
 
-			if j == n {
-				sortedQueue[i-1] = []int{h, n}
+			if j == p[1] {
+				sortedQueue[i-1] = []int{p[0], p[1]}
 			}
-		}
+
 	}
 
 	return sortedQueue
 }
 
-func insertToQueue(heightQueue *[]int, i, j, h int) {
+func insertToQueue(heightQueue *[][]int, i, j int, p []int) {
 
 	if len(*heightQueue) == 0 {
-		*heightQueue = []int{h}
-		return
+		*heightQueue = [][]int{p}
 	}
 
 	n := (i + j )/2
 
-	if h == (*heightQueue)[n] {
-		return
-	}
-
 	if i >= j {
-		if (*heightQueue)[n] < h {
-			arr := append([]int{h},  (*heightQueue)[n+1:]...)
+		if (*heightQueue)[n][0] < p[0] {
+			arr := append([][]int{p},  (*heightQueue)[n+1:]...)
 			*heightQueue = append((*heightQueue)[:n+1], arr...)
 			return
 		} else {
-			arr := append([]int{h}, (*heightQueue)[n:]...)
+			arr := append([][]int{p}, (*heightQueue)[n:]...)
 			*heightQueue = append((*heightQueue)[0:n], arr...)
 			return
 		}
 	}
 
-	if h > (*heightQueue)[n] {
-		insertToQueue(heightQueue, n+1, j, h)
+	if p[0] >= (*heightQueue)[n][0] {
+		insertToQueue(heightQueue, n+1, j, p)
 	}
 
-	if h < (*heightQueue)[n]  {
-		insertToQueue(heightQueue, i, n-1, h)
+	if p[0] < (*heightQueue)[n][0] {
+		insertToQueue(heightQueue, i, n-1, p)
 	}
 
 	return
