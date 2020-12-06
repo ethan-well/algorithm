@@ -11,31 +11,53 @@ type TreeNode struct {
 func main() {
 	root := GenerateTree()
 
-	println(kthSmallest(root, 2))
+	println(kthSmallest(root, 4))
 }
 
 
 func kthSmallest(root *TreeNode, k int) int {
-	var result []int
-	deepSearchTree(root, &result, k)
-
-	return result[k-1]
+	var n = 0
+	_, result := deepSearchTree(root, k, &n)
+	return result
 }
 
-func deepSearchTree(root *TreeNode, resultArr *[]int, k int) {
+//func deepSearchTree(root *TreeNode, resultArr *[]int, k int) {
+//	if root.Left != nil {
+//		deepSearchTree(root.Left, resultArr, k)
+//	}
+//
+//	if len(*resultArr) == k {
+//		return
+//	}
+//
+//	*resultArr = append(*resultArr, root.Val)
+//
+//	if root.Right != nil {
+//		deepSearchTree(root.Right, resultArr, k)
+//	}
+//}
+
+func deepSearchTree(root *TreeNode, k int, n *int) (bool, int)  {
 	if root.Left != nil {
-		deepSearchTree(root.Left, resultArr, k)
+		bool, v := deepSearchTree(root.Left, k, n)
+		if bool {
+			return true, v
+		}
 	}
 
-	if len(*resultArr) == k {
-		return
+	*n ++
+	if *n == k {
+		return true, root.Val
 	}
-
-	*resultArr = append(*resultArr, root.Val)
 
 	if root.Right != nil {
-		deepSearchTree(root.Right, resultArr, k)
+		bool, v := deepSearchTree(root.Right, k, n)
+		if bool {
+			return true, v
+		}
 	}
+
+	return false, root.Val
 }
 
 func GenerateTree() *TreeNode {
