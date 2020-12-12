@@ -5,8 +5,6 @@ func main() {
 }
 
 func findKthNumber(n int, k int) int {
-	//prefix := currentNode(1,  100)
-
 	count := 1
 	prefix := 1
 	for count < k {
