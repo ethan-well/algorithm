@@ -1,11 +1,15 @@
 package main
 
 func main()  {
-	nums1 := []int{2,3,4,5,6,7,8,9,10}
-	nums2 := []int{1}
+	//nums1 := []int{2,3,4,5,6,7,8,9,10}
+	//nums2 := []int{1}
+	nums1 := []int{1,2}
+	nums2 := []int{3,4}
 	println(findMedianSortedArrays(nums1, nums2))
 
-	println(findKNodeFromArrays(nums1, nums2, 8))
+	m1, m2 := findKNodeFromArrays(nums1, nums2, 8)
+
+	println(m1, m2)
 }
 
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
@@ -24,40 +28,55 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	length := len(nums1) + len(nums2)
 	if  length % 2 == 0 {
 		k1 := length / 2
-		m1 := findKNodeFromArrays(nums1, nums2, k1)
-
-		k2 := length / 2 + 1
-		m2 := findKNodeFromArrays(nums1, nums2, k2)
+		m1, m2 := findKNodeFromArrays(nums1, nums2, k1)
 
 		return (m1 + m2) / 2
 	} else {
 		k := length / 2 + 1
-		return findKNodeFromArrays(nums1, nums2, k)
+		m, _ := findKNodeFromArrays(nums1, nums2, k)
+		return m
 	}
 }
 
-func findKNodeFromArrays(nums1, nums2 []int, k int)  float64 {
+func findKNodeFromArrays(nums1, nums2 []int, k int) (float64, float64) {
 	if k < 0 {
-		return 0
+		return 0, 0
 	}
 
 	if len(nums1) + len(nums2) < k {
-		return 0
+		return 0, 0
 	}
 
 	if len(nums1) == 0 {
-		return float64(nums2[k-1])
+		if len(nums2[k-1:]) > 1 {
+			return float64(nums2[k-1]), float64(nums2[k])
+		}
+
+		return float64(nums2[k-1]), 0
 	}
 
 	if len(nums2) == 0 {
-		return float64(nums1[k-1])
+		if len(nums1[k-1:]) > 1 {
+			return float64(nums1[k-1]), float64(nums1[k])
+		}
+
+		return float64(nums1[k-1]), 0
 	}
 
 	if k == 1 {
 		if nums1[0] < nums2[0] {
-			return float64(nums1[0])
+			if len(nums1) > 1 && nums1[1] < nums2[0] {
+				return float64(nums1[0]), float64(nums1[1])
+			}
+
+			return float64(nums1[0]), float64(nums2[0])
 		}
-		return float64(nums2[0])
+
+		if len(nums2) > 1 && nums2[1] < nums1[0] {
+			return float64(nums2[0]), float64(nums2[1])
+		}
+
+		return float64(nums2[0]), float64(nums1[0])
 	}
 
 	t := k / 2
