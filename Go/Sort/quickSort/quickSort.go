@@ -60,6 +60,7 @@ func QuickSort(left int, right int, array *[9]int) {
 }
 
 func myQuickSort(left int, right int, arr *[8000000]int) {
+
 	l := left
 	r := right
 	postion := arr[(left+right)/2]
@@ -124,4 +125,48 @@ func main() {
 	fmt.Printf("快速排序法耗时%d秒", end-start)
 	fmt.Println(arr)
 
+
+	arr2 := []int{-9, 78, 0, 23, -567, 70, 123, 90, -23}
+	QuickSort2(arr2, 0, len(arr2)-1)
+	fmt.Println(arr2)
 }
+
+func QuickSort2(arr []int, left, right int) {
+	l := left
+	r := right
+	if r <= l {
+		return
+	}
+	//pivot
+	pivot := arr[(l+r)/2]
+
+	for l < r {
+		for arr[l] < pivot {
+			l ++
+		}
+
+		for arr[r] > pivot {
+			r --
+		}
+
+		arr[l], arr[r] = arr[r], arr[l]
+	}
+
+	if r == l {
+		r --
+		l ++
+	}
+
+	if left < r {
+		QuickSort2(arr, left, r)
+	}
+
+	if right > l {
+		QuickSort2(arr, l, right)
+	}
+}
+
+func Quick(arr []int) {
+	arr[0] = 1
+}
+

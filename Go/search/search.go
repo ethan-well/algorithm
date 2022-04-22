@@ -1,6 +1,9 @@
-package main
+package search
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 func search(nums []int, target int) int {
 	if len(nums) == 0 {
@@ -45,7 +48,7 @@ func searchTarget(nums []int, left, right, target int) int {
 	return targetIndex
 }
 
-func main() {
+func TestSearch(t *testing.T) {
 	arr := []int{2, 3, 4, 5, 1}
 	target := 1
 	fmt.Println(search(arr, target))
