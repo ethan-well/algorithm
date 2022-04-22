@@ -8,6 +8,9 @@ import (
 func AToi(input string) (int64, error) {
 	err := errors.New("Input is not a int64 number")
 
+	maxIn64Str := []byte("9223372036854775807")
+	minIn64Str := []byte("9223372036854775808")
+
 	input = strings.TrimSpace(input)
 	inputLen := len(input)
 	if inputLen == 0 {
@@ -43,15 +46,15 @@ func AToi(input string) (int64, error) {
 		// 判断正数是否超过 max int64
 		// 只对输入字符串长度等于 maxLen: 19 的进行检查
 		// 长度超过 19 的在外层已经判断
-		if inputLen == maxLen && base == 1 && overflowMax(char, i) {
-			return 0, errors.New("Input is overflow max Int64")
+		if inputLen == maxLen && base == 1 && overflowMax(char, maxIn64Str, i) {
+			return 0, errors.New("Input is overflow max Int64. ")
 		}
 
 		// 判断负数是否小于 min int64
 		// 只对输入字符串长度等于 maxLen: 19 的进行检查
 		// 长度超过 19 的在外层已经判断
-		if inputLen == maxLen && base == -1 && overflowMin(char, i) {
-			return 0, errors.New("input is overflow min Int64")
+		if inputLen == maxLen && base == -1 && overflowMin(char, minIn64Str, i) {
+			return 0, errors.New("Input is overflow min Int64. ")
 		}
 
 		//number += int64(n) * int64(math.Pow10(inputLen-i-1))
@@ -62,15 +65,11 @@ func AToi(input string) (int64, error) {
 }
 
 // 判断正数是否超过 max int64
-func overflowMax(char byte, index int) bool {
-	maxIn64Str := []byte("9223372036854775807")
-
+func overflowMax(char byte, maxIn64Str []byte, index int) bool {
 	return maxIn64Str[index]-char > 0
 }
 
 // 判断负数是否超过 min int64
-func overflowMin(char byte, index int) bool {
-	minIn64Str := []byte("9223372036854775808")
-
+func overflowMin(char byte, minIn64Str []byte, index int) bool {
 	return minIn64Str[index]-char > 0
 }
